@@ -1,15 +1,13 @@
 import math
 import random
-
+import pygame
+from pygame import mixer
 import os
 import configparser
 
 configparser = configparser.RawConfigParser()
 configFilePath = os.path.join(os.path.dirname(__file__), 'space_odyssey.cfg')
 configparser.read(configFilePath)
-
-import pygame
-from pygame import mixer
 
 # Intialize the pygame
 pygame.init()
@@ -68,9 +66,6 @@ game_font = configparser.get("fonts", "game_font")
 over_font = pygame.font.Font(game_font, 64)
 game_over_text = configparser.get("texts", "game_over_text")
 
-
-
-
 level_font = pygame.font.Font(game_font, 30)
 level_no = 1
 level_count1 = 1
@@ -127,7 +122,7 @@ def newgame():
     global score1, score2, final_score1, final_score2, a1, a2
     global level_count1, level_count2, level_no
     global time1, time2
-    
+
     screen.blit(background, (0, 0))
     over_font = pygame.font.Font(game_font, 64)
     over_text = over_font.render(game_over_text, True, (255, 255, 255))
@@ -259,7 +254,7 @@ def col_w_mtr(ocket1_x, ocket1_y, mtr_x, mtr_y):
             screen.blit(boom_img, (rocket2_x, rocket2_y))
             pygame.display.update()
             pygame.time.delay(500)
-        
+
         return True
     else:
         return False
