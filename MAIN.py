@@ -130,13 +130,13 @@ def newgame():
 
     # print(str(score1) + "score1")
     score1_font = pygame.font.Font(game_font, 30)
-    Score1_font = score1_font.render("Player1's score : " + str(score1), True, (255, 255, 255))
+    Score1_font = score1_font.render("Player1's score : " + str(score1-time1/100), True, (255, 255, 255))
 
     screen.blit(Score1_font, (300, 300))
 
     score2_font = pygame.font.Font(game_font, 30)
     # print(str(score2) + "score2")
-    Score2_font = score2_font.render("Player2's score : " + str(score2), True, (255, 255, 255))
+    Score2_font = score2_font.render("Player2's score : " + str(score2-time2/100), True, (255, 255, 255))
     screen.blit(Score2_font, (300, 400))
 
     time1_font = score1_font.render("time penalty P1: " + str(time1/100), True, (255, 255, 255))
@@ -191,6 +191,7 @@ def newgame():
     time1 = 0
     time2 = 0
 
+    countl += -1
 n = 7
 
 for i in range(n):
@@ -668,6 +669,7 @@ while running:
     # scoring for player1
     # for moving objects
     # print(score1, score2)
+    
     if count1 >= 1:
         if count2 >= 1:
             newgame()
