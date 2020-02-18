@@ -669,7 +669,7 @@ while running:
     # scoring for player1
     # for moving objects
     # print(score1, score2)
-    
+
     if count1 >= 1:
         if count2 >= 1:
             newgame()
