@@ -1,6 +1,13 @@
 import math
 import random
 
+import os
+import configparser
+
+configparser = configparser.RawConfigParser()
+configFilePath = os.path.join(os.path.dirname(__file__), 'space_odyssey.cfg')
+configparser.read(configFilePath)
+
 import pygame
 from pygame import mixer
 
@@ -11,7 +18,8 @@ pygame.init()
 screen = pygame.display.set_mode((1000, 950))
 
 # Background
-background = pygame.image.load('background.png')
+backgroundimage = configparser.get("images", "backgroundimage")
+background = pygame.image.load(backgroundimage)
 
 # mixer.music.load("background.wav")
 # mixer.music.play(-1)
@@ -21,25 +29,26 @@ pygame.display.set_caption("mygame")
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
 
+asteroid_speed = configparser.getint("integers", "asteroid_speed")
 rocket1_img = pygame.image.load('rocket1.png')
-rocket1_x = 450
-rocket1_y = 840
+rocket1_x = configparser.getint("integers", "rocket1_x")
+rocket1_y = configparser.getint("integers", "rocket1_y")
 rocket1_x_change = 0
 rocket1_y_change = 0
-rocket1_speed = 7
-asteroid_speed_rocket1 = 1
+rocket1_speed = configparser.getint("integers", "rocket1_speed")
+asteroid_speed_rocket1 = asteroid_speed
 
 rocket2_img = pygame.image.load('rocket2.png')
-rocket2_x = 450
-rocket2_y = 30
+rocket2_x = configparser.getint("integers", "rocket2_x")
+rocket2_y = configparser.getint("integers", "rocket2_y")
 rocket2_x_change = 0
 rocket2_y_change = 0
-rocket2_speed = 7
-asteroid_speed_rocket2 = 1
+rocket2_speed = configparser.getint("integers", "rocket2_speed")
+asteroid_speed_rocket2 = asteroid_speed
 
 rocket3_img = pygame.image.load('rocket3.png')
 
-lines_img = pygame.image.load('lines.png')
+
 asteroid_img = pygame.image.load('asteroid1.png')
 boom_img = pygame.image.load('boom.png')
 
@@ -55,16 +64,14 @@ def rocket2(x, y):
 def asteroid(x, y):
     screen.blit(asteroid_img, (x, y))
 
-
-over_font = pygame.font.Font('bubble.ttf', 64)
-
-
-def game_over_text():
-    over_text = over_font.render("GAME OVER", True, (255, 255, 255))
-    screen.blit(over_text, (200, 250))
+game_font = configparser.get("fonts", "game_font")
+over_font = pygame.font.Font(game_font, 64)
+game_over_text = configparser.get("texts", "game_over_text")
 
 
-level_font = pygame.font.Font('bubble.ttf', 30)
+
+
+level_font = pygame.font.Font(game_font, 30)
 level_no = 1
 level_count1 = 1
 level_count2 = 1
@@ -93,7 +100,7 @@ for i in range(n):
     sobjectX4.append(random.randint(10, 900))
     sobjectX5.append(random.randint(10, 900))
 
-asteroid_speed = 1
+
 player1 = True
 player2 = False
 
@@ -120,18 +127,19 @@ def newgame():
     global score1, score2, final_score1, final_score2, a1, a2
     global level_count1, level_count2, level_no
     global time1, time2
+    
     screen.blit(background, (0, 0))
-    over_font = pygame.font.Font('bubble.ttf', 64)
-    over_text = over_font.render("GAME OVER", True, (255, 255, 255))
+    over_font = pygame.font.Font(game_font, 64)
+    over_text = over_font.render(game_over_text, True, (255, 255, 255))
     screen.blit(over_text, (300, 150))
 
     # print(str(score1) + "score1")
-    score1_font = pygame.font.Font('bubble.ttf', 30)
+    score1_font = pygame.font.Font(game_font, 30)
     Score1_font = score1_font.render("Player1's score : " + str(score1), True, (255, 255, 255))
 
     screen.blit(Score1_font, (300, 300))
 
-    score2_font = pygame.font.Font('bubble.ttf', 30)
+    score2_font = pygame.font.Font(game_font, 30)
     # print(str(score2) + "score2")
     Score2_font = score2_font.render("Player2's score : " + str(score2), True, (255, 255, 255))
     screen.blit(Score2_font, (300, 400))
@@ -267,7 +275,7 @@ for i in range(m):
 running = True
 while(running):
     screen.blit(background, (0, 0))
-    over_font = pygame.font.Font('bubble.ttf', 90)
+    over_font = pygame.font.Font(game_font, 90)
     global over_text
     over_text = over_font.render('SPACE ODYSSEY', True, (255, 255, 255))
     screen.blit(over_text, (150, 150))
@@ -288,7 +296,7 @@ while(running):
 running = True
 while(running):
     screen.blit(background, (0, 0))
-    over_font = pygame.font.Font('bubble.ttf', 90)
+    over_font = pygame.font.Font(game_font, 90)
 
     over_text = over_font.render("GAME BEGINS IN", True, (255, 255, 255))
     screen.blit(over_text, (100, 150))
@@ -369,23 +377,23 @@ while running:
                 rocket2_y_change = 0
 
     if player1 is True:
-        turn_font = pygame.font.Font('bubble.ttf', 30)
+        turn_font = pygame.font.Font(game_font, 30)
         Turn_font = turn_font.render("Player1's turn", True, (255, 255, 255))
         screen.blit(Turn_font, (780, 10))
 
     if player2 is True:
-        turn_font = pygame.font.Font('bubble.ttf', 30)
+        turn_font = pygame.font.Font(game_font, 30)
         Turn_font = turn_font.render("Player2's turn", True, (255, 255, 255))
         screen.blit(Turn_font, (780, 10))
 
-    score1_font = pygame.font.Font('bubble.ttf', 30)
+    score1_font = pygame.font.Font(game_font, 30)
     a = str(score1)
 
     Score1_font = score1_font.render("Player1's score : " + a, True, (255, 255, 255))
     screen.blit(Score1_font, (10, 910))
     b = str(score2)
 
-    score2_font = pygame.font.Font('bubble.ttf', 30)
+    score2_font = pygame.font.Font(game_font, 30)
 
     Score2_font = score2_font.render("Player2's score : " + b, True, (255, 255, 255))
     screen.blit(Score2_font, (690, 910))
