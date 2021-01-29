@@ -21,11 +21,13 @@ background = pygame.image.load(backgroundimage)
 
 # mixer.music.load("background.wav")
 # mixer.music.play(-1)
+mixer.music.load("explosion.wav")
+mixer.music.play(-1)
 
 # game name and title
 pygame.display.set_caption("mygame")
-icon = pygame.image.load('icon.png')
-pygame.display.set_icon(icon)
+#icon = pygame.image.load('icon.png')
+#pygame.display.set_icon(icon)
 
 asteroid_speed = configparser.getint("integers", "asteroid_speed")
 rocket1_img = pygame.image.load('rocket1.png')
@@ -228,6 +230,11 @@ def col_w_mtr(ocket1_x, ocket1_y, mtr_x, mtr_y):
     if distance < 60:
         # print('//////////////')
         # print(score1,score2)
+       
+        mixer.music.load("explosion.wav")
+        mixer.music.play(0)
+        pygame.time.delay(100)
+
         if (rocket1_x == ocket1_x and rocket1_y == ocket1_y):
             count1 += 1
             player2 = True
