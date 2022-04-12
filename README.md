@@ -1,5 +1,7 @@
 # SpaceOdyssey
 
+![Game](https://github.com/kganeshchandan/SpaceOdyssey/blob/master/game.jpg?raw=true)
+
 This game is written in python using pygame library 
 
 It is a 2 player game
